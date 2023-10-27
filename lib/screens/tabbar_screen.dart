@@ -34,9 +34,9 @@ class _TabbarScreenState extends State<TabbarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Medical Consultation App'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Medical Consultation App'),
+      // ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

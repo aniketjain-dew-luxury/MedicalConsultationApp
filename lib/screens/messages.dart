@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../models/Message.dart';
+
 class MessageScreen extends StatefulWidget {
+  static const String apiUrl = 'http://localhost:3000/consultations';
   const MessageScreen({super.key});
 
   @override
@@ -10,25 +13,55 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
-  List<Message> messages = [];
+  List<Consultation> messages = [];
+  List<Consultation> filteredMessages = [];
+  bool isLoading = true;
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    // Call the function to fetch data when the screen is initialized.
-    fetchData();
+    fetchData().then((_) {
+      filteredMessages = messages;
+    });
+  }
+
+  void filterMessages(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredMessages = messages;
+      } else {
+        filteredMessages = messages
+            .where((message) =>
+                message.doctorName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
   }
 
   Future<void> fetchData() async {
-    final response =
-        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    isLoading = true;
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
+    try {
+      final response = await http.get(Uri.parse(MessageScreen.apiUrl));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          messages = data
+              .map((consultation) => Consultation.fromJson(consultation))
+              .toList();
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
       setState(() {
-        messages = data.map((message) => Message.fromJson(message)).toList();
+        isLoading = false;
+        // Handle the error, e.g., display an error message
+        // errorMessage = 'Failed to load data. Check your internet connection.';
       });
-    } else {
-      throw Exception('Failed to load data');
     }
   }
 
@@ -36,19 +69,69 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messages'),
+        centerTitle: false,
+        title: const Text(
+          'Chat',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: ListView.builder(
-        itemCount: messages.length,
-        itemBuilder: (context, index) {
-          return MessageCard(
-            imagePath: '',
-            title: messages[index].title,
-            description: messages[index].body,
-            time: 'xyz',
-          );
-        },
-      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 2.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search),
+                          const SizedBox(width: 8.0),
+                          Expanded(
+                            child: TextField(
+                              controller: searchController,
+                              onChanged: (query) {
+                                filterMessages(query);
+                              },
+                              decoration: const InputDecoration(
+                                hintText: 'Search',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  key: const Key('messageList'),
+                  child: ListView.builder(
+                    itemCount: filteredMessages.length,
+                    itemBuilder: (context, index) {
+                      return MessageCard(
+                        imagePath: filteredMessages[index].imageURL,
+                        title: filteredMessages[index].doctorName,
+                        description:
+                            filteredMessages[index].chatList[0].message,
+                        time: filteredMessages[index].time,
+                        isOnline: filteredMessages[index].isOnline,
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
     );
   }
 }
@@ -58,6 +141,7 @@ class MessageCard extends StatelessWidget {
   final String title;
   final String description;
   final String time;
+  final bool isOnline; // Add isOnline
 
   const MessageCard({
     super.key,
@@ -65,52 +149,66 @@ class MessageCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.time,
+    required this.isOnline,
   });
 
   @override
   Widget build(BuildContext context) {
+    TextStyle labelStyle = const TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 18.0,
+      color: Colors.black, // Set label text color
+    );
+    TextStyle descriptionStyle = const TextStyle(
+      fontSize: 16.0,
+      color: Colors.grey, // Set description text color
+    );
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 2.0,
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage(imagePath),
-                radius: 30.0,
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  width: 6.0,
-                  height: 6.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.green, // or Colors.grey
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        imagePath), // Replace 'consultation' with your data
+                    radius: 30.0,
                   ),
-                ),
+                  Positioned(
+                    right: 3,
+                    bottom: 5,
+                    child: Container(
+                      width: 10.0,
+                      height: 10.0,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 16.0),
+              const SizedBox(width: 16.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
+                      style: labelStyle,
                       maxLines: 1,
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Text(
                       description,
-                      style: TextStyle(fontSize: 16.0),
+                      style: descriptionStyle,
                       maxLines: 1,
                     ),
                   ],
@@ -118,7 +216,7 @@ class MessageCard extends StatelessWidget {
               ),
               Text(
                 time,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14.0,
                 ),
@@ -127,23 +225,6 @@ class MessageCard extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Message {
-  final String title;
-  final String body;
-
-  Message({
-    required this.title,
-    required this.body,
-  });
-
-  factory Message.fromJson(Map<String, dynamic> json) {
-    return Message(
-      title: json['title'],
-      body: json['body'],
     );
   }
 }
