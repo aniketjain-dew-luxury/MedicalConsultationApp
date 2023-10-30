@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../models/Message.dart';
+import '../models/consultation.dart';
 
 class MessageScreen extends StatefulWidget {
   static const String apiUrl = 'http://localhost:3000/consultations';

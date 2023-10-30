@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_consultation_app/screens/tabbar_screen.dart';
+import 'package:medical_consultation_app/screens/tabbar_controller.dart';
 
 void main() {
   runApp(const MyApp());

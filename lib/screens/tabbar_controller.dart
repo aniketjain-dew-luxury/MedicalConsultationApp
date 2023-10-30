@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
-import 'messages.dart';
+import 'package:medical_consultation_app/screens/home_page.dart';
+import 'messages_page.dart';
 
 class TabbarScreen extends StatefulWidget {
   const TabbarScreen({super.key});
