@@ -8,7 +8,6 @@ The Medical Consultation App is a Flutter-based mobile application that allows u
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -34,14 +33,15 @@ $ flutter pub get
 Run the app:
 $ flutter run
 
-Usage
+## Usage
 
 To use the Medical Consultation App:
 
 Launch the app on your mobile device.
 Browse through the recommended doctors and select one.
 Schedule an appointment with your preferred doctor.
-Contributing
+
+## Contributing
 
 We welcome contributions to the Medical Consultation App. To contribute:
 
