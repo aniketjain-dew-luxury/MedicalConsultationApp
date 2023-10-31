@@ -1,0 +1,133 @@
+{
+  "widgetList": {
+    "profileWidget": {
+      "name": "Aniket",
+      "feels": "How are you feeling today?",
+      "imageURL": "https://via.placeholder.com/150/771796"
+    },
+    "searchBarWidget": true,
+    "quickLinksWidget": [
+      {
+        "title": "Hospitals",
+        "imageURL": "hospital"
+      },
+      {
+        "title": "Consultants",
+        "imageURL": "consultant"
+      },
+      {
+        "title": "Recipes",
+        "imageURL": "recipe"
+      },
+      {
+        "title": "Appointments",
+        "imageURL": "appointment"
+      }
+    ],
+    "appointmentsWidget": [
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Jennifer Adams",
+        "speciality": "Ophthalmologist",
+        "isChatEnabled": true,
+        "appointmentDate": "2023-11-01",
+        "appointmentTime": "10:00 AM"
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. Richard Davis",
+        "speciality": "Neurologist",
+        "isChatEnabled": true,
+        "appointmentDate": "2023-11-02",
+        "appointmentTime": "2:30 PM"
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Laura White",
+        "speciality": "Gynecologist",
+        "isChatEnabled": true,
+        "appointmentDate": "2023-11-05",
+        "appointmentTime": "3:15 PM"
+      }
+    ],
+    "doctorsRecommended": [
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. Sarah Johnson",
+        "speciality": "Pediatrician",
+        "rating": 4.9,
+        "reviewCount": 55
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Michael Anderson",
+        "speciality": "Orthopedic Surgeon",
+        "rating": 4.7,
+        "reviewCount": 48
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. Emily Roberts",
+        "speciality": "Dentist",
+        "rating": 4.6,
+        "reviewCount": 62
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Jennifer Adams",
+        "speciality": "Ophthalmologist",
+        "rating": 4.8,
+        "reviewCount": 53
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. Richard Davis",
+        "speciality": "Neurologist",
+        "rating": 4.7,
+        "reviewCount": 49
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Laura White",
+        "speciality": "Gynecologist",
+        "rating": 4.9,
+        "reviewCount": 58
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. William Johnson",
+        "speciality": "Psychiatrist",
+        "rating": 4.8,
+        "reviewCount": 47
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Sandra Wilson",
+        "speciality": "Dermatologist",
+        "rating": 4.7,
+        "reviewCount": 52
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. David Lee",
+        "speciality": "ENT Specialist",
+        "rating": 4.6,
+        "reviewCount": 60
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/771796",
+        "doctorName": "Dr. Mary Robinson",
+        "speciality": "Cardiologist",
+        "rating": 4.8,
+        "reviewCount": 57
+      },
+      {
+        "imageURL": "https://via.placeholder.com/150/92c952",
+        "doctorName": "Dr. Robert Moore",
+        "speciality": "Orthodontist",
+        "rating": 4.9,
+        "reviewCount": 63
+      }
+    ]
+  }
+}

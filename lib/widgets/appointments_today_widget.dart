@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/models/home_data.dart';
 
 class AppointmentsTodayWidget extends StatefulWidget {
-  const AppointmentsTodayWidget({super.key});
+  final List<Appointment> appointments;
+
+  const AppointmentsTodayWidget({Key? key, required this.appointments})
+      : super(key: key);
 
   @override
   _AppointmentsTodayWidgetState createState() =>
-      _AppointmentsTodayWidgetState();
+      _AppointmentsTodayWidgetState(appointments: appointments);
 }
 
 class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
   bool expanded = false;
   int maxCards = 3; // Maximum number of cards to display in the collapsed state
+  final List<Appointment> appointments;
+
+  _AppointmentsTodayWidgetState({required this.appointments});
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +56,7 @@ class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
             ? ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  AppointmentCard(),
-                  AppointmentCard(),
-                  AppointmentCard(),
-                  // Add more AppointmentCard widgets as needed
-                ],
+                children: _buildAppointmentCards(),
               )
             : SizedBox(
                 height: 180, // Adjust the height as needed
@@ -72,7 +74,7 @@ class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
       final topPosition = i * 6.0; // Adjust the position as needed
       final leftPosition = i * 12.0; // Adjust the position as needed
       final rightPosition = i * 12.0; // Adjust the position as needed
-      const card = AppointmentCard();
+      final card = AppointmentCard(appointment: appointments[i]);
       stackedCards.add(
         Positioned(
           top: topPosition,
@@ -84,10 +86,21 @@ class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
     }
     return stackedCards;
   }
+
+  List<Widget> _buildAppointmentCards() {
+    final List<Widget> cards = [];
+    for (int i = 0; i < appointments.length; i++) {
+      cards.add(AppointmentCard(appointment: appointments[i]));
+    }
+    return cards;
+  }
 }
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key});
+  final Appointment appointment;
+
+  const AppointmentCard({Key? key, required this.appointment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +112,7 @@ class AppointmentCard extends StatelessWidget {
             BorderRadius.circular(16.0), // Adjust the radius as needed
       ),
       child: SizedBox(
-        height: 150, // Adjust the height as needed
+        // height: 150, // Adjust the height as needed
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -108,9 +121,9 @@ class AppointmentCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Top left - Doctor circle image
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'doctor_image_url'), // Replace with the actual image URL
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(appointment
+                        .imageURL), // Use the appointment's image URL
                     radius: 30.0,
                   ),
                   // Top right - Chat icon
@@ -127,23 +140,25 @@ class AppointmentCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16.0),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Doctor Name',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.white,
-                        ),
+                        appointment
+                            .doctorName, // Use the appointment's doctor name
+                        style: const TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        'Speciality',
-                        style: TextStyle(
-                          fontSize: 16.0,
+                        appointment
+                            .speciality, // Use the appointment's speciality
+                        style: const TextStyle(
+                          fontSize: 14.0,
                           color: Colors.white,
                         ),
                       ),
@@ -153,16 +168,18 @@ class AppointmentCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Timing',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
+                        appointment
+                            .appointmentTime, // Use the appointment's timing
+                        style: const TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        'Date',
-                        style: TextStyle(
-                          fontSize: 16.0,
+                        appointment
+                            .appointmentDate, // Use the appointment's date
+                        style: const TextStyle(
+                          fontSize: 14.0,
                           color: Colors.white,
                         ),
                       ),

@@ -17,30 +17,25 @@ class UserInfoWidget extends StatelessWidget {
     return Row(
       children: [
         // Profile Image
-        Align(
-          alignment: Alignment.topCenter,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                username,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              username,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+              ),
+            ),
+            const SizedBox(height: 10.0),
+            Text(status,
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24.0,
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(status,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      color: Colors.grey,
-                    )),
-              ),
-            ],
-          ),
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey,
+                )),
+          ],
         ),
+
         const Spacer(),
         CircleAvatar(
           radius: 30.0,

@@ -5,40 +5,37 @@ class DoctorDetailHighlight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _HighlightColumn(label: 'Patients', value: '1056'),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: 8.0), // Adjust the padding as needed
-              child: VerticalDivider(
-                color: Colors.white,
-                thickness: 1.0,
-                width: 20.0,
-              ),
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        color: Color.fromARGB(18, 33, 149, 243),
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _HighlightColumn(label: 'Patients', value: '1056'),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 8.0), // Adjust the padding as needed
+            child: VerticalDivider(
+              color: Colors.white,
+              thickness: 1.0,
+              width: 20.0,
             ),
-            _HighlightColumn(label: 'Experience', value: '10 yrs'),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: 8.0), // Adjust the padding as needed
-              child: VerticalDivider(
-                color: Colors.white,
-                thickness: 1.0,
-                width: 20.0,
-              ),
+          ),
+          _HighlightColumn(label: 'Experience', value: '10 yrs'),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: 8.0), // Adjust the padding as needed
+            child: VerticalDivider(
+              color: Colors.white,
+              thickness: 1.0,
+              width: 20.0,
             ),
-            _HighlightColumn(label: 'Rating', value: '4.8'),
-          ],
-        ),
+          ),
+          _HighlightColumn(label: 'Rating', value: '4.8'),
+        ],
       ),
     );
   }
@@ -58,16 +55,14 @@ class _HighlightColumn extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 18.0,
-            color: Colors.white,
-          ),
+              fontSize: 16.0, color: Color.fromARGB(50, 0, 0, 0)),
         ),
         Text(
           value,
           style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.blue,
           ),
         ),
       ],
