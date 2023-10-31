@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/screens/coming_soon.dart';
 import 'package:medical_consultation_app/screens/home_page.dart';
 import 'messages_page.dart';
 
@@ -14,15 +15,10 @@ class _TabbarScreenState extends State<TabbarScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
     const HomePage(),
-    const HomePage(),
-    const HomePage(),
-    MessageScreen(),
-    const HomePage(),
-
-    // ReceiptScreen(),
-    // AddScreen(),
-    // MessageScreen(),
-    // SettingScreen(),
+    const ComingSoonScreen(),
+    const ComingSoonScreen(),
+    const AppointmentScreen(),
+    const ComingSoonScreen(),
   ];
 
   void _onTabTapped(int index) {

@@ -4,30 +4,20 @@ import 'package:intl/intl.dart';
 class DateTimeSelectionWidget extends StatefulWidget {
   final Function(int) onDateSelected;
   final Function(int) onTimeSelected;
+  final List<String> dateSlots;
+  final List<String> timeSlots;
 
   DateTimeSelectionWidget({
     required this.onDateSelected,
     required this.onTimeSelected,
+    required this.dateSlots,
+    required this.timeSlots,
   });
 
   @override
   _DateTimeSelectionWidgetState createState() =>
       _DateTimeSelectionWidgetState();
 }
-
-List<String> dateSlots = [
-  "2023-11-01",
-  "2023-11-02",
-  "2023-11-03",
-  "2023-11-04",
-];
-
-List<String> timeSlots = [
-  "08:00 AM",
-  "10:00 AM",
-  "02:00 PM",
-  "04:00 PM",
-];
 
 class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
   int selectedDateIndex = 0;
@@ -49,9 +39,10 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
           height: 80,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: dateSlots.length,
+            itemCount: widget.dateSlots.length,
             itemBuilder: (context, index) {
-              DateTime date = DateFormat('yyyy-MM-dd').parse(dateSlots[index]);
+              DateTime date =
+                  DateFormat('yyyy-MM-dd').parse(widget.dateSlots[index]);
               String day = DateFormat('d').format(date);
               String dayName = DateFormat('E').format(date);
 
@@ -66,7 +57,7 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
                     selectedDateIndex = index;
                   });
                   print('Selected date: $dayName $day');
-                  print('Selected date: ${dateSlots[index]}');
+                  print('Selected date: ${widget.dateSlots[index]}');
                 },
               );
             },
@@ -85,10 +76,10 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
           height: 55,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: timeSlots.length,
+            itemCount: widget.timeSlots.length,
             itemBuilder: (context, index) {
               return TimeCard(
-                time: timeSlots[index],
+                time: widget.timeSlots[index],
                 isSelected: selectedTimeIndex == index,
                 onTap: () {
                   widget.onTimeSelected(index);
@@ -96,7 +87,7 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
                   setState(() {
                     selectedTimeIndex = index;
                   });
-                  print('Selected time: ${timeSlots[index]}');
+                  print('Selected time: ${widget.timeSlots[index]}');
                 },
               );
             },

@@ -24,109 +24,128 @@
         "imageURL": "appointment"
       }
     ],
-    "appointmentsWidget": [
-      {
-        "imageURL": "https://via.placeholder.com/150/771796",
-        "doctorName": "Dr. Jennifer Adams",
-        "speciality": "Ophthalmologist",
-        "isChatEnabled": true,
-        "appointmentDate": "2023-11-01",
-        "appointmentTime": "10:00 AM"
-      },
-      {
-        "imageURL": "https://via.placeholder.com/150/92c952",
-        "doctorName": "Dr. Richard Davis",
-        "speciality": "Neurologist",
-        "isChatEnabled": true,
-        "appointmentDate": "2023-11-02",
-        "appointmentTime": "2:30 PM"
-      },
-      {
-        "imageURL": "https://via.placeholder.com/150/771796",
-        "doctorName": "Dr. Laura White",
-        "speciality": "Gynecologist",
-        "isChatEnabled": true,
-        "appointmentDate": "2023-11-05",
-        "appointmentTime": "3:15 PM"
-      }
-    ],
+    "appointmentsWidget": [],
     "doctorsRecommended": [
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. Sarah Johnson",
         "speciality": "Pediatrician",
         "rating": 4.9,
-        "reviewCount": 55
+        "reviewCount": 55,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Sarah Johnson is a dedicated pediatrician with over 10 years of experience in providing compassionate care to children of all ages. She is known for her expertise in child healthcare and has treated thousands of young patients, earning the trust of parents and families in the community.",
+        "yearsOfExperience": 10
       },
       {
         "imageURL": "https://via.placeholder.com/150/771796",
         "doctorName": "Dr. Michael Anderson",
         "speciality": "Orthopedic Surgeon",
         "rating": 4.7,
-        "reviewCount": 48
+        "reviewCount": 48,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "09:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Michael Anderson is a highly skilled orthopedic surgeon with a focus on surgical and nonsurgical treatments of musculoskeletal conditions. He has a wealth of experience in restoring mobility and improving the quality of life for his patients.",
+        "yearsOfExperience": 15
       },
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. Emily Roberts",
         "speciality": "Dentist",
         "rating": 4.6,
-        "reviewCount": 62
+        "reviewCount": 62,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Emily Roberts is a skilled dentist known for her gentle approach and comprehensive dental care. With over 12 years of experience, she focuses on promoting oral health and delivering beautiful smiles to her patients.",
+        "yearsOfExperience": 12
       },
       {
         "imageURL": "https://via.placeholder.com/150/771796",
         "doctorName": "Dr. Jennifer Adams",
         "speciality": "Ophthalmologist",
         "rating": 4.8,
-        "reviewCount": 53
+        "reviewCount": 53,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Jennifer Adams is a trusted ophthalmologist with a passion for improving vision and eye health. With over 14 years of experience, she offers comprehensive eye care and treatments for a wide range of eye conditions.",
+        "yearsOfExperience": 14
       },
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. Richard Davis",
         "speciality": "Neurologist",
         "rating": 4.7,
-        "reviewCount": 49
+        "reviewCount": 49,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Richard Davis is an experienced neurologist who specializes in diagnosing and treating disorders of the nervous system. With over 20 years of practice, he provides expert care for patients with neurological conditions.",
+        "yearsOfExperience": 20
       },
       {
         "imageURL": "https://via.placeholder.com/150/771796",
         "doctorName": "Dr. Laura White",
         "speciality": "Gynecologist",
         "rating": 4.9,
-        "reviewCount": 58
+        "reviewCount": 58,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Laura White is a dedicated gynecologist with more than 18 years of experience in women's healthcare. She provides comprehensive services and supports women in maintaining their reproductive health and wellness.",
+        "yearsOfExperience": 18
       },
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. William Johnson",
         "speciality": "Psychiatrist",
         "rating": 4.8,
-        "reviewCount": 47
+        "reviewCount": 47,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. William Johnson is a compassionate psychiatrist who has been providing mental health care for more than 16 years. He specializes in the diagnosis and treatment of various mental health disorders.",
+        "yearsOfExperience": 16
       },
       {
         "imageURL": "https://via.placeholder.com/150/771796",
         "doctorName": "Dr. Sandra Wilson",
         "speciality": "Dermatologist",
         "rating": 4.7,
-        "reviewCount": 52
+        "reviewCount": 52,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Sandra Wilson is a board-certified dermatologist with over 14 years of experience. She offers expert dermatological care and helps patients achieve healthy and radiant skin.",
+        "yearsOfExperience": 14
       },
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. David Lee",
         "speciality": "ENT Specialist",
         "rating": 4.6,
-        "reviewCount": 60
+        "reviewCount": 60,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. David Lee is an ear, nose, and throat (ENT) specialist with more than 22 years of experience. He provides comprehensive care for patients with ear, nose, and throat conditions.",
+        "yearsOfExperience": 22
       },
       {
         "imageURL": "https://via.placeholder.com/150/771796",
         "doctorName": "Dr. Mary Robinson",
         "speciality": "Cardiologist",
         "rating": 4.8,
-        "reviewCount": 57
+        "reviewCount": 57,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Mary Robinson is a highly regarded cardiologist with over 19 years of experience. She specializes in diagnosing and treating heart conditions, ensuring the cardiac health of her patients.",
+        "yearsOfExperience": 19
       },
       {
         "imageURL": "https://via.placeholder.com/150/92c952",
         "doctorName": "Dr. Robert Moore",
         "speciality": "Orthodontist",
         "rating": 4.9,
-        "reviewCount": 63
+        "reviewCount": 63,
+        "dateSlots": ["2023-11-01", "2023-11-02", "2023-11-03", "2023-11-04"],
+        "timeSlots": ["08:00 AM", "10:00 AM", "02:00 PM", "04:00 PM"],
+        "aboutDoctor": "Dr. Robert Moore is a skilled orthodontist who has been straightening smiles for over 15 years. He is known for his expertise in orthodontic treatments and creating beautiful, healthy smiles.",
+        "yearsOfExperience": 15
       }
     ]
   }

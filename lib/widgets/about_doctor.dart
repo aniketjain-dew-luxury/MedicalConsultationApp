@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AboutDoctorWidget extends StatefulWidget {
-  const AboutDoctorWidget({super.key});
+class AboutDoctorWidget extends StatelessWidget {
+  final String about;
 
-  @override
-  _AboutDoctorWidgetState createState() => _AboutDoctorWidgetState();
-}
+  AboutDoctorWidget({
+    required this.about,
+  });
 
-class _AboutDoctorWidgetState extends State<AboutDoctorWidget> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         Row(
           children: [
@@ -31,7 +30,7 @@ class _AboutDoctorWidgetState extends State<AboutDoctorWidget> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Text(
-                      'Dr. John Smith, Lorem ipsum dolor sit amet consectetur adipiscing elit. Suspendisse ut interdum ipsum, quis vulputate est. Proin nec arcu vel odio rhoncus vehicula, Phasellus at massa nec libero laoreet suscipit.',
+                      about,
                       overflow: TextOverflow.visible,
                       style: TextStyle(color: Colors.grey),
                     ),

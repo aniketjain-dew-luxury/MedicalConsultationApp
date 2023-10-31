@@ -2,7 +2,7 @@ class HomeData {
   final ProfileWidget profileWidget;
   final bool searchBarWidget;
   final List<QuickLink> quickLinksWidget;
-  final List<Appointment> appointmentsWidget;
+  List<Appointment> appointmentsWidget;
   final List<Doctor> doctorsRecommended;
 
   HomeData({
@@ -91,6 +91,17 @@ class Appointment {
       appointmentTime: json['appointmentTime'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'imageURL': imageURL,
+      'doctorName': doctorName,
+      'speciality': speciality,
+      'isChatEnabled': isChatEnabled,
+      'appointmentDate': appointmentDate,
+      'appointmentTime': appointmentTime,
+    };
+  }
 }
 
 class Doctor {
@@ -99,6 +110,10 @@ class Doctor {
   final String speciality;
   final double rating;
   final int reviewCount;
+  final List<String> dateSlots;
+  final List<String> timeSlots;
+  final String aboutDoctor; // New attribute
+  final int yearsOfExperience; // New attribute
 
   Doctor({
     required this.imageURL,
@@ -106,6 +121,10 @@ class Doctor {
     required this.speciality,
     required this.rating,
     required this.reviewCount,
+    required this.dateSlots,
+    required this.timeSlots,
+    required this.aboutDoctor, // New attribute
+    required this.yearsOfExperience, // New attribute
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
@@ -113,8 +132,12 @@ class Doctor {
       imageURL: json['imageURL'],
       doctorName: json['doctorName'],
       speciality: json['speciality'],
-      rating: json['rating'],
+      rating: json['rating'].toDouble(),
       reviewCount: json['reviewCount'],
+      dateSlots: List<String>.from(json['dateSlots']),
+      timeSlots: List<String>.from(json['timeSlots']),
+      aboutDoctor: json['aboutDoctor'], // New attribute
+      yearsOfExperience: json['yearsOfExperience'], // New attribute
     );
   }
 }

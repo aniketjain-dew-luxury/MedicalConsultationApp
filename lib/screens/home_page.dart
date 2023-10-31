@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/widgets/doctor_recommendations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/appointments_today_widget.dart';
 import '../widgets/quick_links_widget.dart';
@@ -27,7 +28,27 @@ class _HomePageState extends State<HomePage> {
         await rootBundle.loadString('assets/home_data.json');
 
     // Parse the JSON data.
-    return HomeData.fromJson(json.decode(jsonData)['widgetList']);
+    final homeData = HomeData.fromJson(json.decode(jsonData)['widgetList']);
+
+    // Retrieve saved appointments from local storage
+    final savedAppointments = await getSavedAppointments();
+
+    // Update the appointments widget data with the saved appointments
+    homeData.appointmentsWidget = savedAppointments;
+
+    return homeData;
+  }
+
+  Future<List<Appointment>> getSavedAppointments() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> encodedAppointments =
+        prefs.getStringList('appointments') ?? [];
+
+    final List<Appointment> savedAppointments = encodedAppointments
+        .map((e) => Appointment.fromJson(json.decode(e)))
+        .toList();
+
+    return List.from(savedAppointments.reversed);
   }
 
   @override
@@ -56,8 +77,14 @@ class _HomePageState extends State<HomePage> {
                   QuickLinksWidget(
                       quickLinkItems: homeData?.quickLinksWidget ?? []),
                   const SizedBox(height: 16.0),
-                  AppointmentsTodayWidget(
-                      appointments: homeData?.appointmentsWidget ?? []),
+                  Visibility(
+                    visible: homeData?.appointmentsWidget.isEmpty != true,
+                    child: AppointmentsTodayWidget(
+                      appointments: homeData?.appointmentsWidget ?? [],
+                    ),
+                  ),
+                  // AppointmentsTodayWidget(
+                  //                 appointments: homeData?.appointmentsWidget ?? []),
                   DoctorRecommendations(
                     doctors: homeData?.doctorsRecommended ?? [],
                   )

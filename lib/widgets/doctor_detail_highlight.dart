@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DoctorDetailHighlight extends StatelessWidget {
-  const DoctorDetailHighlight({super.key});
+  final String patients;
+  final String experience;
+  final String rating;
+
+  DoctorDetailHighlight({
+    required this.patients,
+    required this.experience,
+    required this.rating,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,27 +22,29 @@ class DoctorDetailHighlight extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _HighlightColumn(label: 'Patients', value: '1056'),
+          _HighlightColumn(label: 'Patients', value: patients),
           const Padding(
             padding: EdgeInsets.symmetric(
-                vertical: 8.0), // Adjust the padding as needed
+              vertical: 8.0,
+            ),
             child: VerticalDivider(
               color: Colors.white,
               thickness: 1.0,
               width: 20.0,
             ),
           ),
-          _HighlightColumn(label: 'Experience', value: '10 yrs'),
+          _HighlightColumn(label: 'Experience', value: experience),
           const Padding(
             padding: EdgeInsets.symmetric(
-                vertical: 8.0), // Adjust the padding as needed
+              vertical: 8.0,
+            ),
             child: VerticalDivider(
               color: Colors.white,
               thickness: 1.0,
               width: 20.0,
             ),
           ),
-          _HighlightColumn(label: 'Rating', value: '4.8'),
+          _HighlightColumn(label: 'Rating', value: rating),
         ],
       ),
     );
@@ -45,7 +55,10 @@ class _HighlightColumn extends StatelessWidget {
   final String label;
   final String value;
 
-  _HighlightColumn({required this.label, required this.value});
+  _HighlightColumn({
+    required this.label,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +68,9 @@ class _HighlightColumn extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-              fontSize: 16.0, color: Color.fromARGB(50, 0, 0, 0)),
+            fontSize: 16.0,
+            color: Color.fromARGB(50, 0, 0, 0),
+          ),
         ),
         Text(
           value,

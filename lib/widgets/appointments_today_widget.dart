@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 
@@ -70,19 +72,21 @@ class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
 
   List<Positioned> _buildStackedCards() {
     final List<Positioned> stackedCards = [];
-    for (int i = maxCards - 1; i >= 0; i--) {
-      final topPosition = i * 6.0; // Adjust the position as needed
-      final leftPosition = i * 12.0; // Adjust the position as needed
-      final rightPosition = i * 12.0; // Adjust the position as needed
-      final card = AppointmentCard(appointment: appointments[i]);
-      stackedCards.add(
-        Positioned(
-          top: topPosition,
-          left: leftPosition,
-          right: rightPosition,
-          child: card,
-        ),
-      );
+    for (int i = min(maxCards, appointments.length) - 1; i >= 0; i--) {
+      if (i < appointments.length) {
+        final topPosition = i * 6.0; // Reverse the position
+        final leftPosition = i * 3.0; // Reverse the position
+        final rightPosition = i * 3.0; // Reverse the position
+        final card = AppointmentCard(appointment: appointments[i]);
+        stackedCards.add(
+          Positioned(
+            top: topPosition,
+            left: leftPosition,
+            right: rightPosition,
+            child: card,
+          ),
+        );
+      }
     }
     return stackedCards;
   }

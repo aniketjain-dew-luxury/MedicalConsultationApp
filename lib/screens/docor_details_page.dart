@@ -5,6 +5,7 @@ import 'package:medical_consultation_app/widgets/about_doctor.dart';
 import 'package:medical_consultation_app/widgets/date_time_picker.dart';
 import 'package:medical_consultation_app/widgets/doctor_detail_highlight.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class DoctorDetailScreen extends StatefulWidget {
   final Doctor doctor; // The doctor's data
@@ -69,15 +70,20 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               // Add more doctor details here
               const SizedBox(height: 16.0),
 
-              const DoctorDetailHighlight(),
+              DoctorDetailHighlight(
+                  patients: "1000",
+                  experience: widget.doctor.yearsOfExperience.toString(),
+                  rating: widget.doctor.rating.toString()),
               const SizedBox(height: 16.0),
 
-              AboutDoctorWidget(),
+              AboutDoctorWidget(about: widget.doctor.aboutDoctor),
               const SizedBox(height: 16.0),
 
               DateTimeSelectionWidget(
                 onDateSelected: handleDateSelection,
                 onTimeSelected: handleTimeSelection,
+                dateSlots: widget.doctor.dateSlots,
+                timeSlots: widget.doctor.timeSlots,
               ),
 // Add the "Book Appointment" button
               // Add the ElevatedButton widget here
@@ -89,36 +95,62 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Appointment Confirmation'),
+                        title: const Text('Appointment Confirmation'),
                         content: Text(
-                            'Your appointment is scheduled for ${dateSlots[selectedDateIndex]} at ${timeSlots[selectedTimeIndex]}.'),
+                            'Your appointment is scheduled for ${widget.doctor.dateSlots[selectedDateIndex]} at ${widget.doctor.timeSlots[selectedTimeIndex]}.'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(); // Close the dialog
                             },
-                            child: Text('Close'),
+                            child: const Text('Close'),
                           ),
                           TextButton(
                             onPressed: () {
+                              bookAppointment(); // Call the bookAppointment function
+
                               // Perform your appointment booking logic here
                               // You can also save the selected date and time to local storage.
                               Navigator.of(context).pop(); // Close the dialog
                             },
-                            child: Text('Book Appointment'),
+                            child: const Text('Book Appointment'),
                           ),
                         ],
                       );
                     },
                   );
                 },
-                child: Text('Book Appointment'),
+                child: const Text('Book Appointment'),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> saveAppointment(Appointment appointment) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> encodedAppointments =
+        prefs.getStringList('appointments') ?? [];
+
+    encodedAppointments.add(json.encode(appointment.toJson()));
+    await prefs.setStringList('appointments', encodedAppointments);
+  }
+
+  Future<void> bookAppointment() async {
+    final Appointment appointment = Appointment(
+      imageURL: widget.doctor.imageURL,
+      doctorName: widget.doctor.doctorName,
+      speciality: widget.doctor.speciality,
+      isChatEnabled: true,
+      appointmentDate: widget.doctor.dateSlots[selectedDateIndex],
+      appointmentTime: widget.doctor.timeSlots[selectedTimeIndex],
+    );
+
+    await saveAppointment(appointment);
+
+    // Perform any additional appointment booking logic here
   }
 }
 
