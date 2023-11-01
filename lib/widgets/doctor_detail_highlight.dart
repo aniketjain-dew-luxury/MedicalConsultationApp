@@ -5,7 +5,7 @@ class DoctorDetailHighlight extends StatelessWidget {
   final String experience;
   final String rating;
 
-  DoctorDetailHighlight({
+  const DoctorDetailHighlight({super.key, 
     required this.patients,
     required this.experience,
     required this.rating,
@@ -16,7 +16,7 @@ class DoctorDetailHighlight extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        color: Color.fromARGB(18, 33, 149, 243),
+        color: const Color.fromARGB(18, 33, 149, 243),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Row(
@@ -55,7 +55,7 @@ class _HighlightColumn extends StatelessWidget {
   final String label;
   final String value;
 
-  _HighlightColumn({
+  const _HighlightColumn({
     required this.label,
     required this.value,
   });

@@ -1,19 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/widgets/doctor_recommendations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../widgets/appointments_today_widget.dart';
 import '../widgets/quick_links_widget.dart';
 import '../widgets/user_info_widget.dart';
-
 import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }

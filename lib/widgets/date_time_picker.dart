@@ -7,7 +7,8 @@ class DateTimeSelectionWidget extends StatefulWidget {
   final List<String> dateSlots;
   final List<String> timeSlots;
 
-  DateTimeSelectionWidget({
+  const DateTimeSelectionWidget({
+    super.key,
     required this.onDateSelected,
     required this.onTimeSelected,
     required this.dateSlots,
@@ -15,7 +16,7 @@ class DateTimeSelectionWidget extends StatefulWidget {
   });
 
   @override
-  _DateTimeSelectionWidgetState createState() =>
+  State<DateTimeSelectionWidget> createState() =>
       _DateTimeSelectionWidgetState();
 }
 
@@ -56,8 +57,6 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
                   setState(() {
                     selectedDateIndex = index;
                   });
-                  print('Selected date: $dayName $day');
-                  print('Selected date: ${widget.dateSlots[index]}');
                 },
               );
             },
@@ -87,7 +86,6 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
                   setState(() {
                     selectedTimeIndex = index;
                   });
-                  print('Selected time: ${widget.timeSlots[index]}');
                 },
               );
             },
@@ -104,7 +102,8 @@ class DateCard extends StatelessWidget {
   final bool isSelected;
   final Function() onTap;
 
-  DateCard({
+  const DateCard({
+    super.key,
     required this.day,
     required this.dayName,
     this.isSelected = false,
@@ -181,7 +180,8 @@ class TimeCard extends StatelessWidget {
   final bool isSelected;
   final Function() onTap;
 
-  TimeCard({
+  const TimeCard({
+    super.key,
     required this.time,
     this.isSelected = false,
     required this.onTap,

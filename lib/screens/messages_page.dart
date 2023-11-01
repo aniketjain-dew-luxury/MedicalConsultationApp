@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
-import '../widgets/appointment_card.dart';
+import '../widgets/appointment_card_message.dart';
 
 class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({super.key});

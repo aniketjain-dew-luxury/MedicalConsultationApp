@@ -7,8 +7,7 @@ class TabbarScreen extends StatefulWidget {
   const TabbarScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _TabbarScreenState createState() => _TabbarScreenState();
+  State<TabbarScreen> createState() => _TabbarScreenState();
 }
 
 class _TabbarScreenState extends State<TabbarScreen> {
@@ -30,9 +29,6 @@ class _TabbarScreenState extends State<TabbarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Medical Consultation App'),
-      // ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

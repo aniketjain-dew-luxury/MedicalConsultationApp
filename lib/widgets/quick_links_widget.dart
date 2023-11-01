@@ -82,13 +82,3 @@ class QuickLinkItem extends StatelessWidget {
     );
   }
 }
-
-// class QuickLinkItemData {
-//   final IconData icon;
-//   final String title;
-
-//   QuickLinkItemData({
-//     required this.icon,
-//     required this.title,
-//   });
-// }

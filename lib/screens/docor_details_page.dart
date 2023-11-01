@@ -9,18 +9,14 @@ import 'dart:convert';
 
 class DoctorDetailScreen extends StatefulWidget {
   final Doctor doctor; // The doctor's data
-
   const DoctorDetailScreen({super.key, required this.doctor});
-
   @override
   State<DoctorDetailScreen> createState() => _DoctorDetailScreenState();
 }
 
 class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
   int selectedDateIndex = 0;
-
   int selectedTimeIndex = 0;
-
   void handleDateSelection(int index) {
     setState(() {
       selectedDateIndex = index;
@@ -85,7 +81,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                 dateSlots: widget.doctor.dateSlots,
                 timeSlots: widget.doctor.timeSlots,
               ),
-// Add the "Book Appointment" button
+              // Add the "Book Appointment" button
               // Add the ElevatedButton widget here
               ElevatedButton(
                 onPressed: () {
@@ -108,9 +104,6 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                           TextButton(
                             onPressed: () {
                               bookAppointment(); // Call the bookAppointment function
-
-                              // Perform your appointment booking logic here
-                              // You can also save the selected date and time to local storage.
                               Navigator.of(context).pop(); // Close the dialog
                             },
                             child: const Text('Book Appointment'),
@@ -149,19 +142,5 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
     );
 
     await saveAppointment(appointment);
-
-    // Perform any additional appointment booking logic here
   }
 }
-
-// class Doctor {
-//   final String imageURL;
-//   final String name;
-//   final String speciality;
-
-//   Doctor({
-//     required this.imageURL,
-//     required this.name,
-//     required this.speciality,
-//   });
-// }

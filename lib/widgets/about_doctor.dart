@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AboutDoctorWidget extends StatelessWidget {
   final String about;
-
-  AboutDoctorWidget({
+  const AboutDoctorWidget({
+    super.key,
     required this.about,
   });
 
@@ -11,7 +11,7 @@ class AboutDoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             Text(
               'About Doctor',
@@ -28,11 +28,11 @@ class AboutDoctorWidget extends StatelessWidget {
               children: [
                 Flexible(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Text(
                       about,
                       overflow: TextOverflow.visible,
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ),
                 ),
