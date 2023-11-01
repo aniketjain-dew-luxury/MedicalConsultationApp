@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/helper/navigation_manager.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 
 import 'package:medical_consultation_app/widgets/about_doctor.dart';
@@ -37,7 +38,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(); // Navigate back to the previous screen
+            NavigationManager.navigateBackToHome(context, "reload");
+
+            // Navigator.of(context).pop(); // Navigate back to the previous screen
           },
         ),
       ),

@@ -5,8 +5,10 @@ import 'package:medical_consultation_app/widgets/doctor_card.dart';
 class DoctorRecommendations extends StatelessWidget {
   final List<Doctor> doctors;
 
-  const DoctorRecommendations({Key? key, required this.doctors})
+  const DoctorRecommendations(
+      {Key? key, required this.doctors, required this.methodFromParent})
       : super(key: key);
+  final Function(BuildContext context, Doctor doctor)? methodFromParent;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,8 @@ class DoctorRecommendations extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: doctors.length,
           itemBuilder: (context, index) {
-            return DoctorCard(doctor: doctors[index]);
+            return DoctorCard(
+                doctor: doctors[index], methodFromParent: methodFromParent);
           },
         ),
       ],

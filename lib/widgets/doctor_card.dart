@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/helper/navigation_manager.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/screens/docor_details_page.dart';
 
 class DoctorCard extends StatelessWidget {
   final Doctor doctor;
 
-  const DoctorCard({super.key, required this.doctor});
+  const DoctorCard(
+      {super.key, required this.doctor, required this.methodFromParent});
+  final Function(BuildContext context, Doctor doctor)? methodFromParent;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          methodFromParent?.call(context, doctor);
+
+          //  navidateToDoctorDetails(context, doctor);
           // Navigate to DoctorDetailScreen when tapping on the card
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DoctorDetailScreen(doctor: doctor),
-            ),
-          );
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => DoctorDetailScreen(doctor: doctor),
+          //   ),
+          // );
         },
         // onTap: () {
         //   showModalBottomSheet<void>(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/helper/navigation_manager.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/widgets/doctor_recommendations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,16 +16,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeData homeData;
+
+  Future<void> _loadDataFromLocalStorage() async {
+    // Retrieve saved appointments from local storage
+    final savedAppointments = await getSavedAppointments();
+    // Update the appointments widget data with the saved appointments
+    setState(() {
+      homeData.appointmentsWidget = savedAppointments;
+    });
+  }
+
+  Future<void> navidateToDoctorDetails(
+      BuildContext context, Doctor doctor) async {
+    final isReload = await NavigationManager.navigateToAsyncDoctorDetailPage(
+        context, doctor);
+    if (!mounted) {
+      return;
+    }
+    if (isReload == "reload") {
+      _loadDataFromLocalStorage();
+    }
+  }
+
   Future<HomeData> _fetchHomeData() async {
     // Simulate an asynchronous API call with a delay.
-    await Future.delayed(const Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 1));
 
     // Load JSON data from the file.
     final String jsonData =
         await rootBundle.loadString('assets/home_data.json');
 
     // Parse the JSON data.
-    final homeData = HomeData.fromJson(json.decode(jsonData)['widgetList']);
+    homeData = HomeData.fromJson(json.decode(jsonData)['widgetList']);
 
     // Retrieve saved appointments from local storage
     final savedAppointments = await getSavedAppointments();
@@ -54,7 +78,7 @@ class _HomePageState extends State<HomePage> {
       future: _fetchHomeData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -79,10 +103,9 @@ class _HomePageState extends State<HomePage> {
                       appointments: homeData?.appointmentsWidget ?? [],
                     ),
                   ),
-                  // AppointmentsTodayWidget(
-                  //                 appointments: homeData?.appointmentsWidget ?? []),
                   DoctorRecommendations(
                     doctors: homeData?.doctorsRecommended ?? [],
+                    methodFromParent: navidateToDoctorDetails,
                   )
                 ],
               ));
