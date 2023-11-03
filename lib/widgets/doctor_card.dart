@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_consultation_app/helper/navigation_manager.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
-import 'package:medical_consultation_app/screens/docor_details_page.dart';
 
 class DoctorCard extends StatelessWidget {
   final Doctor doctor;
