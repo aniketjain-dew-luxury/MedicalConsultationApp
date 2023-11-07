@@ -37,7 +37,7 @@ class _DateTimeSelectionWidgetState extends State<DateTimeSelectionWidget> {
           ],
         ),
         SizedBox(
-          height: 80,
+          height: 90,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: widget.dateSlots.length,
@@ -115,60 +115,61 @@ class DateCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 50,
-        margin: const EdgeInsets.all(5),
+        width: 60,
         padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
-        decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(16), // Adjust the radius as needed
-          color: isSelected
-              ? Colors.blue
-              : const Color.fromARGB(
-                  20, 33, 149, 243), // Adjust the colors as needed
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding:
-                  const EdgeInsets.only(bottom: 4), // Add padding between rows
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    dayName,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected
-                          ? Colors.white
-                          : Colors.grey, // Adjust text color
+        child: Card(
+          margin: const EdgeInsets.all(0),
+          elevation:
+              isSelected ? 4 : 0, // Add elevation when the card is selected
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(16), // Adjust the radius as needed
+          ),
+          color:
+              isSelected ? Colors.blue : const Color.fromARGB(20, 33, 149, 243),
+          child: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 14), // Add padding between rows
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      dayName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.grey, // Adjust text color
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Container(
-              padding:
-                  const EdgeInsets.only(top: 4), // Add padding between rows
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 10), // Add padding between rows
 
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    day,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: isSelected
-                          ? Colors.white
-                          : Colors.black, // Adjust text color
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      day,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.black, // Adjust text color
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -192,20 +193,30 @@ class TimeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(5),
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+        padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
+        child: Card(
+          margin: const EdgeInsets.all(0),
+
+          elevation:
+              isSelected ? 4 : 0, // Add elevation when the card is selected
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(16), // Adjust the radius as needed
+          ),
           color:
               isSelected ? Colors.blue : const Color.fromARGB(20, 33, 149, 243),
-        ),
-        child: Center(
-          child: Text(
-            time,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: isSelected ? Colors.white : Colors.black,
+          child: Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 16), // Add padding between rows
+              child: Text(
+                time,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isSelected ? Colors.white : Colors.black,
+                ),
+              ),
             ),
           ),
         ),

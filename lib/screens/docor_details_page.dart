@@ -33,93 +33,196 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Doctor Detail'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            NavigationManager.navigateBackToHome(context, "reload");
+        extendBodyBehindAppBar: true, // Make the AppBar transparent
 
-            // Navigator.of(context).pop(); // Navigate back to the previous screen
-          },
+        appBar: AppBar(
+          title: const Text('Doctor Detail'),
+          backgroundColor:
+              Colors.transparent, // Set the AppBar background to transparent
+          elevation: 0, // Remove the shadow
+
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              NavigationManager.navigateBackToHome(context, "reload");
+
+              // Navigator.of(context).pop(); // Navigate back to the previous screen
+            },
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 16.0),
-              CircleAvatar(
-                backgroundImage: NetworkImage(widget.doctor.imageURL),
-                radius: 45.0, // Adjust the radius as needed
-              ),
-              const SizedBox(height: 16.0),
-              Text(
-                widget.doctor.doctorName,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+        body: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            backgroundContainer(),
+            forgroundContainer(context),
+          ],
+        ));
+  }
+
+  Hero forgroundContainer(BuildContext context) {
+    return Hero(
+      flightShuttleBuilder: flightShuttleBuilder,
+      tag: "doctor-${widget.doctor.doctorName}",
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 50.0),
+            margin: const EdgeInsets.only(top: 200.0),
+            decoration: BoxDecoration(
+              color: Colors.white, // Background color of the rounded container
+              borderRadius:
+                  BorderRadius.circular(20.0), // Adjust the radius as needed
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(0.0, 2.0), // Shadow offset
+                  blurRadius: 6.0, // Shadow blur radius
                 ),
-              ),
-              Text(
-                widget.doctor.speciality,
-                style: const TextStyle(fontSize: 18.0, color: Colors.grey),
-              ),
-              // Add more doctor details here
-              const SizedBox(height: 16.0),
-
-              DoctorDetailHighlight(
-                  patients: "1000",
-                  experience: widget.doctor.yearsOfExperience.toString(),
-                  rating: widget.doctor.rating.toString()),
-              const SizedBox(height: 16.0),
-
-              AboutDoctorWidget(about: widget.doctor.aboutDoctor),
-              const SizedBox(height: 16.0),
-
-              DateTimeSelectionWidget(
-                onDateSelected: handleDateSelection,
-                onTimeSelected: handleTimeSelection,
-                dateSlots: widget.doctor.dateSlots,
-                timeSlots: widget.doctor.timeSlots,
-              ),
-              // Add the "Book Appointment" button
-              // Add the ElevatedButton widget here
-              ElevatedButton(
-                onPressed: () {
-                  // Handle the action when the button is pressed
-                  // For example, you can show a confirmation dialog or navigate to another screen.
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Appointment Confirmation'),
-                        content: Text(
-                            'Your appointment is scheduled for ${widget.doctor.dateSlots[selectedDateIndex]} at ${widget.doctor.timeSlots[selectedTimeIndex]}.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Close the dialog
-                            },
-                            child: const Text('Close'),
+              ],
+            ),
+            // color: Colors.green,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                      child: Column(
+                        children: [
+                          // const SizedBox(height: 16.0),
+                          Text(
+                            widget.doctor.doctorName,
+                            style: const TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          TextButton(
+                          Text(
+                            widget.doctor.speciality,
+                            style: const TextStyle(
+                                fontSize: 18.0, color: Colors.grey),
+                          ),
+                          // Add more doctor details here
+                          const SizedBox(height: 16.0),
+
+                          DoctorDetailHighlight(
+                              patients: "1000",
+                              experience:
+                                  widget.doctor.yearsOfExperience.toString(),
+                              rating: widget.doctor.rating.toString()),
+                          const SizedBox(height: 16.0),
+
+                          AboutDoctorWidget(about: widget.doctor.aboutDoctor),
+                          const SizedBox(height: 16.0),
+                          DateTimeSelectionWidget(
+                            onDateSelected: handleDateSelection,
+                            onTimeSelected: handleTimeSelection,
+                            dateSlots: widget.doctor.dateSlots,
+                            timeSlots: widget.doctor.timeSlots,
+                          ),
+                          // Add the "Book Appointment" button
+                          // Add the ElevatedButton widget here
+                          ElevatedButton(
                             onPressed: () {
-                              bookAppointment(); // Call the bookAppointment function
-                              Navigator.of(context).pop(); // Close the dialog
+                              // Handle the action when the button is pressed
+                              // For example, you can show a confirmation dialog or navigate to another screen.
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title:
+                                        const Text('Appointment Confirmation'),
+                                    content: Text(
+                                        'Your appointment is scheduled for ${widget.doctor.dateSlots[selectedDateIndex]} at ${widget.doctor.timeSlots[selectedTimeIndex]}.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: const Text('Close'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          bookAppointment(); // Call the bookAppointment function
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: const Text('Book Appointment'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                             child: const Text('Book Appointment'),
                           ),
                         ],
-                      );
-                    },
-                  );
-                },
-                child: const Text('Book Appointment'),
-              ),
-            ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+          Positioned(
+            top: 150,
+            left: 0,
+            right: 0,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(widget.doctor.imageURL),
+              radius: 45.0, // Adjust the radius as needed
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget flightShuttleBuilder(flightContext, animation, flightDirection,
+      fromHeroContext, toHeroContext) {
+    switch (flightDirection) {
+      case HeroFlightDirection.push:
+        return Material(color: Colors.transparent, child: toHeroContext.widget);
+      case HeroFlightDirection.pop:
+        return Material(
+            color: Colors.transparent, child: fromHeroContext.widget);
+      default:
+        return const Text("data");
+    }
+  }
+
+  Container backgroundContainer() {
+    return Container(
+      color: Colors.red,
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // You can add an image or icon here
+            Icon(
+              Icons.timer,
+              size: 100.0,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'Coming Soon',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              'We are working on something awesome!',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
       ),
     );
