@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/helper/appointment_provider.dart';
 import 'package:medical_consultation_app/helper/navigation_manager.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
-
 import 'package:medical_consultation_app/widgets/about_doctor.dart';
 import 'package:medical_consultation_app/widgets/date_time_picker.dart';
 import 'package:medical_consultation_app/widgets/doctor_detail_highlight.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:provider/provider.dart';
 
 class DoctorDetailScreen extends StatefulWidget {
   final Doctor doctor; // The doctor's data
@@ -44,9 +43,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              NavigationManager.navigateBackToHome(context, "reload");
-
-              // Navigator.of(context).pop(); // Navigate back to the previous screen
+              NavigationManager.navigateBackToHome(context);
             },
           ),
         ),
@@ -134,8 +131,9 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                     doctor: widget.doctor,
                                     selectedDateIndex: selectedDateIndex,
                                     selectedTimeIndex: selectedTimeIndex,
-                                    onBookAppointment:
-                                        bookAppointment, // Pass the callback
+                                    // onBookAppointment: _bookAppointment
+
+                                    // _bookAppointment, // Pass the callback
                                   );
                                 },
                               );
@@ -211,46 +209,24 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
       ),
     );
   }
-
-  Future<void> saveAppointment(Appointment appointment) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final List<String> encodedAppointments =
-        prefs.getStringList('appointments') ?? [];
-
-    encodedAppointments.add(json.encode(appointment.toJson()));
-    await prefs.setStringList('appointments', encodedAppointments);
-  }
-
-  Future<void> bookAppointment() async {
-    final Appointment appointment = Appointment(
-      imageURL: widget.doctor.imageURL,
-      doctorName: widget.doctor.doctorName,
-      speciality: widget.doctor.speciality,
-      isChatEnabled: true,
-      appointmentDate: widget.doctor.dateSlots[selectedDateIndex],
-      appointmentTime: widget.doctor.timeSlots[selectedTimeIndex],
-    );
-
-    await saveAppointment(appointment);
-  }
 }
 
 class AppointmentConfirmationDialog extends StatelessWidget {
   final Doctor doctor;
   final int selectedDateIndex;
   final int selectedTimeIndex;
-  final VoidCallback onBookAppointment;
 
   const AppointmentConfirmationDialog({
     super.key,
     required this.doctor,
     required this.selectedDateIndex,
     required this.selectedTimeIndex,
-    required this.onBookAppointment,
   });
 
   @override
   Widget build(BuildContext context) {
+    final appointmentProvider = context.read<
+        AppointmentProvider>(); // Obtain a reference to the existing instance
     return AlertDialog(
       title: const Text('Appointment Confirmation'),
       content: Text(
@@ -265,10 +241,17 @@ class AppointmentConfirmationDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            // Handle the appointment booking logic here
-            onBookAppointment(); // Call the provided callback function
+            final Appointment appointment = Appointment(
+              imageURL: doctor.imageURL,
+              doctorName: doctor.doctorName,
+              speciality: doctor.speciality,
+              isChatEnabled: true,
+              appointmentDate: doctor.dateSlots[selectedDateIndex],
+              appointmentTime: doctor.timeSlots[selectedTimeIndex],
+            );
+            appointmentProvider.addAppointment(appointment);
             Navigator.of(context).pop();
-            NavigationManager.navigateBackToHome(context, 'reload');
+            NavigationManager.navigateBackToHome(context);
           },
           child: const Text('Book Appointment'),
         ),
