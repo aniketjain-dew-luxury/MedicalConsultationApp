@@ -3,17 +3,18 @@ import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/screens/docor_details_page.dart';
 
 class NavigationManager {
-  static Future<String> navigateToAsyncDoctorDetailPage(
-      BuildContext context, Doctor doctor) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => DoctorDetailScreen(doctor: doctor)),
-    );
-    return result;
-  }
-
   static void navigateBackToHome(BuildContext context, String data) {
     Navigator.pop(context, data);
+  }
+
+  static void navigateToAppointmentScreen(BuildContext context) {
+    Navigator.pushNamed(context, '/appointment');
+  }
+
+  static Future<String?> navigateToAsyncDoctorDetailPage(
+      BuildContext context, Doctor doctor) async {
+    final result = await Navigator.pushNamed<String?>(context, '/doctorDetail',
+        arguments: doctor);
+    return result; // Return a result if needed.
   }
 }

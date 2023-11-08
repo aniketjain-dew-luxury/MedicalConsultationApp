@@ -3,15 +3,16 @@ import 'package:medical_consultation_app/screens/coming_soon.dart';
 import 'package:medical_consultation_app/screens/home_page.dart';
 import 'messages_page.dart';
 
-class TabbarScreen extends StatefulWidget {
-  const TabbarScreen({super.key});
+class HomeTabBarScreen extends StatefulWidget {
+  const HomeTabBarScreen({Key? key}) : super(key: key);
 
   @override
-  State<TabbarScreen> createState() => _TabbarScreenState();
+  State<HomeTabBarScreen> createState() => _HomeTabBarScreenState();
 }
 
-class _TabbarScreenState extends State<TabbarScreen> {
+class _HomeTabBarScreenState extends State<HomeTabBarScreen> {
   int _currentIndex = 0;
+
   final List<Widget> _screens = [
     const HomePage(),
     const ComingSoonScreen(),

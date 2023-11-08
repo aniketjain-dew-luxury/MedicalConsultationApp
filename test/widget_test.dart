@@ -7,24 +7,62 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:medical_consultation_app/main.dart';
+import 'package:medical_consultation_app/screens/tabbar_controller.dart';
+import 'package:medical_consultation_app/screens/coming_soon.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('App Initialization Test', (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MedicalConsultationApp());
+      await tester.pump(); // both pump() and pumpandsettle() works fine
+    }).then((value) {
+      // // Verify if the initial screen is rendered
+      expect(find.byType(HomeTabBarScreen), findsOneWidget);
+    });
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Bottom navigation Bar should be 1', (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MedicalConsultationApp());
+      await tester.pump(); // both pump() and pumpandsettle() works fine
+    }).then((value) {
+      // Verify that there are one bottom navigation bar.
+      expect(find.byType(BottomNavigationBar), findsOneWidget);
+    });
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('BottomNavigationBarItem should be 5',
+      (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MedicalConsultationApp());
+      await tester.pump(); // both pump() and pumpandsettle() works fine
+    }).then((value) {
+      // Find the BottomNavigationBar widget
+      final bottomNavigationBar = find.byType(BottomNavigationBar);
+      // Retrieve the actual widget
+      final bottomNavigationBarWidget =
+          tester.widget<BottomNavigationBar>(bottomNavigationBar);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Verify the number of items in the BottomNavigationBar
+      expect(bottomNavigationBarWidget.items.length, 5);
+    });
+  });
+
+  testWidgets('Tab Switching Test', (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MedicalConsultationApp());
+      await tester.pump(); // both pump() and pumpandsettle() works fine
+    }).then((value) async {
+      // Verify if the initial screen is rendered
+      expect(find.byType(HomeTabBarScreen), findsOneWidget);
+
+      // Tap on a different tab
+      await tester.tap(find.text('Receipt'));
+      await tester.pump();
+
+      // Verify if the new screen is displayed
+      expect(find.byType(ComingSoonScreen), findsOneWidget);
+    });
   });
 }

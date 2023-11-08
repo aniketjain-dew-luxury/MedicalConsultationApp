@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:medical_consultation_app/helper/app_routes.dart';
 import 'package:medical_consultation_app/screens/tabbar_controller.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MedicalConsultationApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MedicalConsultationApp extends StatelessWidget {
+  const MedicalConsultationApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Medical Consultation App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        // useMaterial3: true,
+        primaryColor: Colors.blue,
+        // Customize your theme here.
       ),
-      home: const TabbarScreen(),
+      debugShowCheckedModeBanner: false,
+      // home: const HomeTabBarScreen(),
+      initialRoute:
+          AppRoutes.initialRoute, // Set the initial route from the route class
+      routes: AppRoutes.routes, // Use the named routes from the route class
     );
   }
 }

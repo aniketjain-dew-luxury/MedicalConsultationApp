@@ -130,28 +130,12 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title:
-                                        const Text('Appointment Confirmation'),
-                                    content: Text(
-                                        'Your appointment is scheduled for ${widget.doctor.dateSlots[selectedDateIndex]} at ${widget.doctor.timeSlots[selectedTimeIndex]}.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                        },
-                                        child: const Text('Close'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          bookAppointment(); // Call the bookAppointment function
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                        },
-                                        child: const Text('Book Appointment'),
-                                      ),
-                                    ],
+                                  return AppointmentConfirmationDialog(
+                                    doctor: widget.doctor,
+                                    selectedDateIndex: selectedDateIndex,
+                                    selectedTimeIndex: selectedTimeIndex,
+                                    onBookAppointment:
+                                        bookAppointment, // Pass the callback
                                   );
                                 },
                               );
@@ -248,5 +232,47 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
     );
 
     await saveAppointment(appointment);
+  }
+}
+
+class AppointmentConfirmationDialog extends StatelessWidget {
+  final Doctor doctor;
+  final int selectedDateIndex;
+  final int selectedTimeIndex;
+  final VoidCallback onBookAppointment;
+
+  const AppointmentConfirmationDialog({
+    super.key,
+    required this.doctor,
+    required this.selectedDateIndex,
+    required this.selectedTimeIndex,
+    required this.onBookAppointment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Appointment Confirmation'),
+      content: Text(
+        'Your appointment is scheduled for ${doctor.dateSlots[selectedDateIndex]} at ${doctor.timeSlots[selectedTimeIndex]}.',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Close'),
+        ),
+        TextButton(
+          onPressed: () {
+            // Handle the appointment booking logic here
+            onBookAppointment(); // Call the provided callback function
+            Navigator.of(context).pop();
+            NavigationManager.navigateBackToHome(context, 'reload');
+          },
+          child: const Text('Book Appointment'),
+        ),
+      ],
+    );
   }
 }

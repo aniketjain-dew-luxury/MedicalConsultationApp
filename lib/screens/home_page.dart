@@ -16,14 +16,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeData homeData;
+  static const String homeDataJsonPath = 'assets/home_data.json';
+  static const Duration apiDelay = Duration(seconds: 0);
+
+  late HomeData? homeData;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchHomeData();
+  }
 
   Future<void> _loadDataFromLocalStorage() async {
     // Retrieve saved appointments from local storage
     final savedAppointments = await getSavedAppointments();
     // Update the appointments widget data with the saved appointments
     setState(() {
-      homeData.appointmentsWidget = savedAppointments;
+      homeData?.appointmentsWidget = savedAppointments;
     });
   }
 
@@ -39,13 +48,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<HomeData> _fetchHomeData() async {
+  Future<HomeData?> _fetchHomeData() async {
     // Simulate an asynchronous API call with a delay.
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: apiDelay.inSeconds));
 
     // Load JSON data from the file.
-    final String jsonData =
-        await rootBundle.loadString('assets/home_data.json');
+    final String jsonData = await rootBundle.loadString(homeDataJsonPath);
 
     // Parse the JSON data.
     homeData = HomeData.fromJson(json.decode(jsonData)['widgetList']);
@@ -54,7 +62,7 @@ class _HomePageState extends State<HomePage> {
     final savedAppointments = await getSavedAppointments();
 
     // Update the appointments widget data with the saved appointments
-    homeData.appointmentsWidget = savedAppointments;
+    homeData?.appointmentsWidget = savedAppointments;
 
     return homeData;
   }
@@ -74,7 +82,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<HomeData>(
+        body: FutureBuilder<HomeData?>(
       future: _fetchHomeData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,28 +97,49 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 children: [
                   // Profile Widget
-                  UserInfoWidget(
-                    username: homeData?.profileWidget.name ?? '',
-                    status: homeData?.profileWidget.feels ?? '',
-                    profileImageURL: homeData?.profileWidget.imageURL ?? '',
-                  ),
-                  QuickLinksWidget(
-                      quickLinkItems: homeData?.quickLinksWidget ?? []),
+                  userInfoWidget(homeData),
+                  quickLinksWidget(homeData),
                   const SizedBox(height: 16.0),
                   Visibility(
                     visible: homeData?.appointmentsWidget.isEmpty != true,
-                    child: AppointmentsTodayWidget(
-                      appointments: homeData?.appointmentsWidget ?? [],
-                    ),
+                    child: appointmentsTodayWidget(homeData),
                   ),
-                  DoctorRecommendations(
-                    doctors: homeData?.doctorsRecommended ?? [],
-                    methodFromParent: navidateToDoctorDetails,
-                  )
+                  doctorRecommendationsWidget(homeData)
                 ],
               ));
         }
       },
     ));
+  }
+
+  UserInfoWidget userInfoWidget(HomeData? homeData) {
+    return UserInfoWidget(
+      username: homeData?.profileWidget.name ?? '',
+      status: homeData?.profileWidget.feels ?? '',
+      profileImageURL: homeData?.profileWidget.imageURL ?? '',
+    );
+  }
+
+  QuickLinksWidget quickLinksWidget(HomeData? homeData) {
+    return QuickLinksWidget(quickLinkItems: homeData?.quickLinksWidget ?? []);
+  }
+
+  AppointmentsTodayWidget appointmentsTodayWidget(HomeData? homeData) {
+    return AppointmentsTodayWidget(
+      appointments: homeData?.appointmentsWidget ?? [],
+    );
+  }
+
+  DoctorRecommendations doctorRecommendationsWidget(HomeData? homeData) {
+    return DoctorRecommendations(
+      doctors: homeData?.doctorsRecommended ?? [],
+      methodFromParent: navidateToDoctorDetails,
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose any resources here
+    super.dispose();
   }
 }
