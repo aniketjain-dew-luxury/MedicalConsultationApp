@@ -3,6 +3,7 @@ import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../widgets/appointment_card_message.dart';
+import '../widgets/search_bar_widget.dart';
 
 class AppointmentScreen extends StatefulWidget {
   const AppointmentScreen({super.key});
@@ -79,31 +80,11 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Card(
-              elevation: 2.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.search),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: TextField(
-                        controller: searchController,
-                        onChanged: (query) {
-                          filterAppointments(query);
-                        },
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchBarWidget(
+                controller: searchController,
+                onChanged: filterAppointments,
               ),
             ),
           ),

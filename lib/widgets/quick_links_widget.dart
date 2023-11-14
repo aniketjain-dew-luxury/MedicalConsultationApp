@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 
@@ -21,6 +23,7 @@ class QuickLinksWidget extends StatelessWidget {
           return QuickLinkItem(
             icon: getIcon(item.imageURL),
             title: item.title,
+            color: getIconColor(item.imageURL),
           );
         },
       ),
@@ -43,16 +46,34 @@ class QuickLinksWidget extends StatelessWidget {
         return Icons.error; // Default to an error icon if not found
     }
   }
+
+  Color getIconColor(String iconData) {
+    switch (iconData) {
+      case 'hospital':
+        return Colors.red;
+      case 'consultant':
+        return Colors.blue;
+      case 'recipe':
+        return Colors.yellow;
+      case 'appointment':
+        return Colors.green;
+
+      default:
+        return Colors.red;
+    }
+  }
 }
 
 class QuickLinkItem extends StatelessWidget {
   final IconData icon;
   final String title;
+  final Color color;
 
   const QuickLinkItem({
     Key? key,
     required this.icon,
     required this.title,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -69,13 +90,16 @@ class QuickLinkItem extends StatelessWidget {
                 Colors.white, // Set the background color for the icon
             child: Icon(
               icon,
-              color: Colors.red, // Set the icon color
+              color: color, // Set the icon color
             ),
           ),
           const SizedBox(height: 8.0),
           Text(
             title,
             textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 159, 159, 159)),
           ),
         ],
       ),

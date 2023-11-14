@@ -24,9 +24,10 @@ class _AppointmentsTodayWidgetState extends State<AppointmentsTodayWidget> {
         return FutureBuilder<List<Appointment>>(
             future: appointmentProvider.getAppointmentList(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(); // Display a loading indicator while data is being fetched
-              } else if (snapshot.hasError) {
+              // if (snapshot.connectionState == ConnectionState.waiting) {
+              //   return const CircularProgressIndicator(); // Display a loading indicator while data is being fetched
+              // } else
+              if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 final appointments = snapshot.data;

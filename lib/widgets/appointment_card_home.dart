@@ -29,16 +29,22 @@ class AppointmentCard extends StatelessWidget {
                   CircleAvatar(
                     backgroundImage: NetworkImage(appointment
                         .imageURL), // Use the appointment's image URL
-                    radius: 30.0,
+                    radius: 28.0,
                   ),
                   // Top right - Chat icon
                   Column(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.chat),
-                        onPressed: () {
-                          // Handle chat icon tap
-                        },
+                      CircleAvatar(
+                        radius: 28.0,
+                        backgroundColor:
+                            const Color.fromARGB(74, 255, 255, 255),
+                        child: IconButton(
+                          icon: const Icon(Icons.chat),
+                          color: Colors.white,
+                          onPressed: () {
+                            // Handle chat icon tap
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -59,6 +65,7 @@ class AppointmentCard extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
+                      const SizedBox(height: 8.0),
                       Text(
                         appointment
                             .speciality, // Use the appointment's speciality
@@ -80,6 +87,7 @@ class AppointmentCard extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
+                      const SizedBox(height: 8.0),
                       Text(
                         appointment
                             .appointmentDate, // Use the appointment's date

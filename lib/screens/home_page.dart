@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_consultation_app/models/home_data.dart';
 import 'package:medical_consultation_app/widgets/doctor_recommendations.dart';
 import '../widgets/appointments_today_widget.dart';
+import '../widgets/fake_search_bar_widget.dart';
 import '../widgets/quick_links_widget.dart';
 import '../widgets/user_info_widget.dart';
 import 'package:flutter/services.dart';
@@ -41,30 +42,34 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 243, 243, 243),
         body: FutureBuilder<HomeData?>(
-      future: _fetchHomeData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          final homeData = snapshot.data;
+          future: _fetchHomeData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              final homeData = snapshot.data;
 
-          return Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: ListView(
-                children: [
-                  userInfoWidget(homeData),
-                  quickLinksWidget(homeData),
-                  const SizedBox(height: 16.0),
-                  appointmentsTodayWidget(homeData),
-                  doctorRecommendationsWidget(homeData)
-                ],
-              ));
-        }
-      },
-    ));
+              return Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: ListView(
+                    children: [
+                      userInfoWidget(homeData),
+                      const SizedBox(height: 20.0),
+                      FakeSearchBarWidget(), // Use the FakeSearchBarWidget
+                      const SizedBox(height: 20.0),
+                      quickLinksWidget(homeData),
+                      const SizedBox(height: 20.0),
+                      appointmentsTodayWidget(homeData),
+                      doctorRecommendationsWidget(homeData),
+                    ],
+                  ));
+            }
+          },
+        ));
   }
 
   UserInfoWidget userInfoWidget(HomeData? homeData) {
